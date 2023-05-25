@@ -312,7 +312,7 @@ if __name__ == '__main__':
                     for target in targets:
                         myTable.add_row([session_counter, target[7], target[3], target[4], target[1], target[5], target[2]])
                         session_counter += 1
-                    print (myTable)
+                    print(myTable)
                 if command.split(" ")[1] == '-i':
                     try:
                         num = int(command.split(" ")[2])
